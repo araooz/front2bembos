@@ -1,0 +1,148 @@
+/* ---------- ESTRUCTURA PRINCIPAL ---------- */
+.login-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+    .login-page {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        height: auto;
+    }
+
+    .design-side {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, minmax(100px, 20vh));
+        height: auto;
+    }
+
+    .login-side {
+        padding: 2rem 1rem;
+        min-height: 60vh;
+    }
+
+    .cell-1-0::before {
+        top: 1rem;
+        right: 1rem;
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .design-side {
+        grid-template-rows: repeat(3, minmax(80px, 15vh));
+    }
+
+    .login-side {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* ---------- LADO IZQUIERDO (Diseño) ---------- */
+.design-side {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 100%;
+}
+
+/* Fondo rojo con franjas azules diagonales */
+.cell-0-0 {
+    background: repeating-linear-gradient(
+            45deg,
+            #ff2d37 0px,
+            #ff2d37 20px,
+            #1728b9 20px,
+            #1728b9 40px
+    );
+}
+
+/* Fondo rojo con espiral amarilla */
+.cell-0-1 {
+    background:
+            radial-gradient(circle at 65% 30%,
+            transparent 0%, transparent 6%,
+            #ffd500 6%, #ffd500 12%,
+            #ff2d37 12%, #ff2d37 18%,
+            #ffd500 18%, #ffd500 24%,
+            #ff2d37 24%, #ff2d37 30%,
+            #ffd500 30%, #ffd500 36%,
+            #ff2d37 36%, #ff2d37 42%,
+            #ffd500 42%, #ffd500 48%,
+            #ff2d37 48%, #ff2d37 54%,
+            #ffd500 54%, #ffd500 60%,
+            #ff2d37 60%, #ff2d37 66%,
+            #ffd500 66%, #ffd500 72%,
+            #ff2d37 72%, #ff2d37 78%,
+            #ffd500 78%, #ffd500 84%,
+            #ff2d37 84%, #ff2d37 90%,
+            #ffd500 90%, #ffd500 96%,
+            #ff2d37 96%, #ff2d37 100%
+            ),
+            #ff2d37;
+}
+
+/* Fondo rojo con “B” blanca en círculo */
+.cell-1-0 {
+    background-color: #ff2d37;
+    position: relative;
+    overflow: hidden; /* evita bordes raros */
+}
+
+.cell-1-0::before {
+    content: "B";
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    color: #ff2d37;
+    font-weight: bold;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    font-family: Arial, sans-serif;
+    background: white;
+    border-radius: 50%;
+    width: clamp(1.8rem, 4vw, 2.5rem);
+    height: clamp(1.8rem, 4vw, 2.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fondo azul con puntos amarillos */
+.cell-1-1 {
+    background:
+            radial-gradient(circle, #ffd500 20%, transparent 26%) 0 0 / 40px 40px,
+            radial-gradient(circle, #ffd500 20%, transparent 26%) 20px 20px / 40px 40px,
+            #1728b9;
+    background-repeat: repeat;
+}
+
+/* Fondo rojo con zigzag amarillo */
+.cell-2-0 {
+    background:
+            linear-gradient(135deg, #ffd500 25%, transparent 25%) -10px 0,
+            linear-gradient(225deg, #ffd500 25%, transparent 25%) -10px 0,
+            linear-gradient(315deg, #ffd500 25%, transparent 25%),
+            linear-gradient(45deg, #ffd500 25%, transparent 25%);
+    background-size: 20px 20px;
+    background-color: #ff2d37;
+}
+
+/* Fondo amarillo plano (puedes decorarlo luego) */
+.cell-2-1 {
+    background: #ffd500;
+}
+
+/* ---------- LADO DERECHO (Login) ---------- */
+.login-side {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
