@@ -1,6 +1,6 @@
 import "./loginpage.css";
 import LoginCard from "../components/LoginCard.tsx";
-import bembosLogo from "../../../assets/bembos-logo.png";
+import bembosLogo from "../../../assets/bembos-empleados.png";
 
 function LoginPage() {
     return (
