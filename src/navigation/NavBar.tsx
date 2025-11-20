@@ -15,39 +15,39 @@ function Navbar() {
 
             <div className="flex space-x-8 items-center text-base font-bold">
                 <Link
-                    to="/menu/"
+                    to="/dashboard/"
                     className={`flex items-center space-x-2 hover:text-blue-600 ${
-                        location.pathname === "/menu/"
+                        location.pathname === "/dashboard/"
                             ? "underline decoration-yellow-400 decoration-2"
                             : ""
                     }`}
                 >
                     <Hamburger size={20}/>
-                    <span>MENÚ</span>
+                    <span>Dashboard</span>
                 </Link>
 
                 <Link
-                    to="/menu/promociones/"
+                    to="/pedidos/"
                     className={`flex items-center space-x-2 hover:text-blue-600 ${
-                        location.pathname === "/menu/promociones/"
+                        location.pathname === "/pedidos/"
                             ? "underline decoration-yellow-400 decoration-2"
                             : ""
                     }`}
                 >
                     <TicketPercent size={20}/>
-                    <span>PROMOS EXCLUSIVAS</span>
+                    <span>Pedidos</span>
                 </Link>
 
                 <Link
-                    to="/locales/"
+                    to="/empleados/"
                     className={`flex items-center space-x-2 hover:text-blue-600 ${
-                        location.pathname === "/locales/"
+                        location.pathname === "/empleados/"
                             ? "underline decoration-yellow-400 decoration-2"
                             : ""
                     }`}
                 >
                     <Store size={20}/>
-                    <span>LOCALES</span>
+                    <span>Empleados</span>
                 </Link>
             </div>
 
