@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Hamburger, TicketPercent, Store, PhoneCall, UserCircle } from "lucide-react";
+import { Hamburger, TicketPercent, Store, PhoneCall, UserCircle, Home, User } from "lucide-react";
 import bembosLogo from "../assets/bembos-logo.png";
 
 function Navbar() {
@@ -22,7 +22,7 @@ function Navbar() {
                             : ""
                     }`}
                 >
-                    <Hamburger size={20}/>
+                    <Home size={20}/>
                     <span>Dashboard</span>
                 </Link>
 
@@ -46,7 +46,7 @@ function Navbar() {
                             : ""
                     }`}
                 >
-                    <Store size={20}/>
+                    <User size={20}/>
                     <span>Empleados</span>
                 </Link>
             </div>
