@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Hamburger, TicketPercent, Store, PhoneCall, UserCircle, Home, User } from "lucide-react";
+import { TicketPercent, PhoneCall, UserCircle, Home, User } from "lucide-react";
 import bembosLogo from "../assets/bembos-logo.png";
 
 function Navbar() {
