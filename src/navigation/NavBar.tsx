@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { TicketPercent, PhoneCall, UserCircle, Home, User } from "lucide-react";
+import { TicketPercent, UserCircle, Home, User } from "lucide-react";
 import bembosLogo from "../assets/bembos-logo.png";
 
 function Navbar() {
@@ -52,20 +52,8 @@ function Navbar() {
             </div>
 
             <div className="flex items-center space-x-8 font-bold">
-                <div className="flex items-center space-x-2">
-                    <PhoneCall size={20} className="text-yellow-400"/>
-                    <div className="leading-tight">
-                        <span className="block text-sm">Llámanos</span>
-                        <div className="flex flex-row items-center">
-                            <p className="text-blue-800">01419</p>
-                            <p className="text-red-500">-</p>
-                            <p className="text-blue-800">1919</p>
-                        </div>
-                    </div>
-                </div>
-
                 <Link
-                    to="/login/"
+                    to="/"
                     className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium transition flex items-center space-x-2"
                 >
                     <UserCircle className="text-white" size={20}/>

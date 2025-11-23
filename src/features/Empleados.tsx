@@ -2,6 +2,69 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { UserCircle, Trash2, Edit2, Plus, X } from "lucide-react";
 
+export const empleadosMock: Empleado[] = [
+  {
+    staff_id: "STF-001",
+    tenant_id: "TENANT-001",
+    first_name: "Carlos",
+    last_name: "Ramírez",
+    email: "carlos.ramirez@empresa.com",
+    phone: "987654321",
+    role: "COCINERO",
+    is_active: true,
+    createdAt: "2024-11-10T14:32:00Z",
+    updatedAt: "2024-11-10T14:32:00Z"
+  },
+  {
+    staff_id: "STF-002",
+    tenant_id: "TENANT-001",
+    first_name: "María",
+    last_name: "Torres",
+    email: "maria.torres@empresa.com",
+    phone: "912345678",
+    role: "CAJERO",
+    is_active: true,
+    createdAt: "2024-11-11T09:12:00Z",
+    updatedAt: "2024-11-11T09:12:00Z"
+  },
+  {
+    staff_id: "STF-003",
+    tenant_id: "TENANT-001",
+    first_name: "Luis",
+    last_name: "Santos",
+    email: "luis.santos@empresa.com",
+    phone: "902922331",
+    role: "REPARTIDOR",
+    is_active: false,
+    createdAt: "2024-11-12T18:40:00Z",
+    updatedAt: "2024-12-01T10:20:00Z"
+  },
+  {
+    staff_id: "STF-004",
+    tenant_id: "TENANT-001",
+    first_name: "Ana",
+    last_name: "Gutiérrez",
+    email: "ana.gutierrez@empresa.com",
+    phone: "955001122",
+    role: "ADMIN",
+    is_active: true,
+    createdAt: "2024-10-20T12:00:00Z",
+    updatedAt: "2024-12-05T16:22:00Z"
+  },
+  {
+    staff_id: "STF-005",
+    tenant_id: "TENANT-001",
+    first_name: "Jorge",
+    last_name: "Salinas",
+    email: "jorge.salinas@empresa.com",
+    phone: "999333444",
+    role: "COCINERO",
+    is_active: true,
+    createdAt: "2024-09-15T08:15:00Z",
+    updatedAt: "2024-11-29T14:45:00Z"
+  }
+];
+
 interface Empleado {
   staff_id: string;
   tenant_id: string;
@@ -64,8 +127,7 @@ export default function Empleados() {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get<Empleado[]>("https://api-gateway-url/empleados");
-      setEmpleados(res.data);
+      setEmpleados(empleadosMock);
     } catch (err) {
       setError("Error al cargar los empleados");
       console.error(err);

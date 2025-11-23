@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "../features/login/page/LoginPage.tsx";
 import Dashboard from "../features/Dashboard";
-import Empleados from "../features/empleados/Empleados.tsx";
+import Empleados from "../features/Empleados.tsx";
 import Navbar from "./NavBar.tsx";
 import PedidosPage from "../features/pedidos/page/PedidosPage";
 
