@@ -175,7 +175,7 @@ export default function PedidoModal({
                 className={`w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-colors ${
                   isUpdating
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                    : "bg-blue-800 hover:bg-blue-900 text-white"
                 }`}
               >
                 {isUpdating ? (

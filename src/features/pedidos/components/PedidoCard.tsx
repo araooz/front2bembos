@@ -30,7 +30,7 @@ export default function PedidoCard({ pedido, onClick }: PedidoCardProps) {
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-blue-600 p-4"
+      className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-blue-800 p-4"
     >
       {/* Header */}
       <div className="flex justify-between items-start mb-3">

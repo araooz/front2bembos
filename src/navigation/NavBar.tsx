@@ -16,45 +16,45 @@ function Navbar() {
             <div className="flex space-x-8 items-center text-base font-bold">
                 <Link
                     to="/dashboard/"
-                    className={`flex items-center space-x-2 hover:text-blue-600 ${
+                    className={`flex items-center space-x-2 hover:text-blue-900 ${
                         location.pathname === "/dashboard/"
-                            ? "underline decoration-yellow-400 decoration-2"
+                            ? "underline decoration-yellow decoration-2"
                             : ""
                     }`}
                 >
-                    <Home size={20}/>
-                    <span>Dashboard</span>
+                    <Home size={20} className={'text-blue-800'}/>
+                    <span className={'text-blue-800'}>Dashboard</span>
                 </Link>
 
                 <Link
                     to="/pedidos/"
-                    className={`flex items-center space-x-2 hover:text-blue-600 ${
+                    className={`flex items-center space-x-2 hover:text-blue-900 ${
                         location.pathname === "/pedidos/"
                             ? "underline decoration-yellow-400 decoration-2"
                             : ""
                     }`}
                 >
-                    <TicketPercent size={20}/>
-                    <span>Pedidos</span>
+                    <TicketPercent size={20} className={'text-blue-800'}/>
+                    <span className={'text-blue-800'}>Pedidos</span>
                 </Link>
 
                 <Link
                     to="/empleados/"
-                    className={`flex items-center space-x-2 hover:text-blue-600 ${
+                    className={`flex items-center space-x-2 hover:text-blue-900 ${
                         location.pathname === "/empleados/"
                             ? "underline decoration-yellow-400 decoration-2"
                             : ""
                     }`}
                 >
-                    <User size={20}/>
-                    <span>Empleados</span>
+                    <User size={20} className={'text-blue-800'}/>
+                    <span className={'text-blue-800'}>Empleados</span>
                 </Link>
             </div>
 
             <div className="flex items-center space-x-8 font-bold">
                 <Link
                     to="/"
-                    className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium transition flex items-center space-x-2"
+                    className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 font-medium transition flex items-center space-x-2"
                 >
                     <UserCircle className="text-white" size={20}/>
                     <span className="text-white">Iniciar sesión</span>

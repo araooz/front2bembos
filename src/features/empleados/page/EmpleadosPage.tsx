@@ -87,13 +87,13 @@ export default function EmpleadosPage() {
             <button
               onClick={handleRefresh}
               disabled={loading}
-              className="bg-white text-blue-600 px-3 py-2 rounded-lg shadow hover:bg-gray-50 flex items-center space-x-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-white text-blue-800 px-3 py-2 rounded-lg shadow hover:bg-gray-100 flex items-center space-x-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <RefreshCw size={20} className={loading ? "animate-spin" : ""} />
             </button>
             <button
               onClick={() => handleOpenModal()}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors font-medium"
+              className="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors font-medium"
             >
               <Plus size={20} />
               <span className="hidden sm:inline">Nuevo</span>
@@ -112,7 +112,7 @@ export default function EmpleadosPage() {
         {loading ? (
           <div className="bg-white rounded-lg shadow p-6 sm:p-8 flex items-center justify-center min-h-[400px]">
             <div className="text-center">
-              <RefreshCw size={40} className="animate-spin text-blue-600 mx-auto mb-4" />
+              <RefreshCw size={40} className="animate-spin text-blue-800 mx-auto mb-4" />
               <p className="text-gray-600">Cargando empleados...</p>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function EmpleadosPage() {
               {filtro !== "ambos" && (
                 <button
                   onClick={() => setFiltro("ambos")}
-                  className="text-blue-600 hover:text-blue-700 font-medium"
+                  className="text-blue-800 hover:text-blue-900 font-medium"
                 >
                   Ver todos los empleados
                 </button>

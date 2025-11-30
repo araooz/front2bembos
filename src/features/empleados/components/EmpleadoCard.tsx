@@ -21,13 +21,13 @@ export default function EmpleadoCard({ empleado, onClick }: EmpleadoCardProps) {
     <div
       onClick={onClick}
       className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-l-4 p-4 ${
-        empleado.isActive ? "border-blue-600" : "border-gray-400"
+        empleado.isActive ? "border-blue-800" : "border-gray-400"
       }`}
     >
       {/* Header */}
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-center space-x-2">
-          <User size={20} className={empleado.isActive ? "text-blue-600" : "text-gray-400"} />
+          <User size={20} className={empleado.isActive ? "text-blue-800" : "text-gray-400"} />
           <div>
             <p className="text-lg font-bold text-gray-900">{empleado.name}</p>
           </div>
