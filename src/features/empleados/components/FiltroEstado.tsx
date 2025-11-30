@@ -29,7 +29,7 @@ export default function FiltroEstado({ filtroActual, onChange }: FiltroEstadoPro
           onClick={() => onChange(filtro)}
           className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
             filtroActual === filtro
-              ? "bg-blue-600 text-white"
+              ? "bg-blue-800 text-white"
               : "text-gray-600 hover:bg-gray-100"
           }`}
         >
