@@ -37,14 +37,40 @@ export function useEmpleados(): UseEmpleadosReturn {
       setLoading(true);
       setError(null);
 
-      const response = await axios.get<Empleado[]>(
+      console.log("Fetching from:", `${API_BASE_URL}/staff/${TENANT_ID}/all/members`);
+
+      const response = await axios.get(
         `${API_BASE_URL}/staff/${TENANT_ID}/all/members`
       );
 
-      setEmpleados(response.data);
-    } catch (err) {
+      console.log("Response:", response.data);
+
+      // Manejar diferentes formatos de respuesta del backend
+      let empleadosData: Empleado[] = [];
+
+      if (Array.isArray(response.data)) {
+        // Si la respuesta es un array directamente
+        empleadosData = response.data;
+      } else if (response.data && typeof response.data === 'object') {
+        // Si la respuesta es un objeto con una propiedad que contiene el array
+        if (response.data.members && Array.isArray(response.data.members)) {
+          empleadosData = response.data.members;
+        } else if (response.data.data && Array.isArray(response.data.data)) {
+          empleadosData = response.data.data;
+        } else if (response.data.items && Array.isArray(response.data.items)) {
+          empleadosData = response.data.items;
+        } else {
+          // Si es un objeto con empleados, convertirlo a array
+          empleadosData = Object.values(response.data);
+        }
+      }
+
+      console.log("Empleados procesados:", empleadosData);
+      setEmpleados(empleadosData);
+    } catch (err: any) {
       console.error("Error fetching empleados:", err);
-      setError("Error al cargar los empleados");
+      console.error("Error response:", err.response?.data);
+      setError(err.response?.data?.message || "Error al cargar los empleados");
     } finally {
       setLoading(false);
     }
@@ -54,7 +80,7 @@ export function useEmpleados(): UseEmpleadosReturn {
     try {
       setError(null);
 
-      await axios.post(
+      const response = await axios.post(
         `${API_BASE_URL}/staff/${TENANT_ID}/new/members`,
         {
           email: data.email,
@@ -63,10 +89,12 @@ export function useEmpleados(): UseEmpleadosReturn {
         }
       );
 
+      console.log("Create response:", response.data);
       await fetchEmpleados();
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error creating empleado:", err);
-      setError("Error al crear el empleado");
+      console.error("Error response:", err.response?.data);
+      setError(err.response?.data?.message || "Error al crear el empleado");
       throw err;
     }
   };
@@ -75,13 +103,15 @@ export function useEmpleados(): UseEmpleadosReturn {
     try {
       setError(null);
 
-      await axios.put(
+      const response = await axios.put(
         `${API_BASE_URL}/staff/${TENANT_ID}/members/${staffId}`,
         {
           name: data.name,
           role: data.role,
         }
       );
+
+      console.log("Update response:", response.data);
 
       // Actualizar el estado local
       setEmpleados((prev) =>
@@ -91,9 +121,10 @@ export function useEmpleados(): UseEmpleadosReturn {
             : empleado
         )
       );
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error updating empleado:", err);
-      setError("Error al actualizar el empleado");
+      console.error("Error response:", err.response?.data);
+      setError(err.response?.data?.message || "Error al actualizar el empleado");
       throw err;
     }
   };
@@ -102,9 +133,11 @@ export function useEmpleados(): UseEmpleadosReturn {
     try {
       setError(null);
 
-      await axios.post(
+      const response = await axios.post(
         `${API_BASE_URL}/staff/${TENANT_ID}/members/${staffId}/delete`
       );
+
+      console.log("Delete response:", response.data);
 
       // Actualizar el estado local (soft delete)
       setEmpleados((prev) =>
@@ -114,9 +147,10 @@ export function useEmpleados(): UseEmpleadosReturn {
             : empleado
         )
       );
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error deleting empleado:", err);
-      setError("Error al desactivar el empleado");
+      console.error("Error response:", err.response?.data);
+      setError(err.response?.data?.message || "Error al desactivar el empleado");
       throw err;
     }
   };
@@ -125,14 +159,16 @@ export function useEmpleados(): UseEmpleadosReturn {
     try {
       setError(null);
 
-      const response = await axios.get<Empleado>(
+      const response = await axios.get(
         `${API_BASE_URL}/staff/${TENANT_ID}/members/${staffId}`
       );
 
+      console.log("Get empleado response:", response.data);
       return response.data;
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error fetching empleado:", err);
-      setError("Error al obtener el empleado");
+      console.error("Error response:", err.response?.data);
+      setError(err.response?.data?.message || "Error al obtener el empleado");
       return null;
     }
   };
