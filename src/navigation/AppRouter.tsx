@@ -12,7 +12,7 @@ export default function AppRouter() {
                 <Navbar />
                 <div className="flex-1 w-full">
                     <Routes>
-                        <Route path="/" element={<LoginPage/>} />
+                        <Route path="/*" element={<LoginPage/>} />
                         <Route path="/dashboard" element={<DashboardPage />} />
                         <Route path="/pedidos" element={<PedidosPage />} />
                         <Route path="/empleados" element={<EmpleadosPage />} />
