@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import type { Pedido, OrderStatus } from "../types/pedido.types";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://fx702kg7p7.execute-api.us-east-1.amazonaws.com/dev";
-const TENANT_ID = import.meta.env.VITE_TENANT_ID || "default-tenant";
+const ORDERS_API_URL = import.meta.env.VITE_ORDERS_API_URL;
+const TENANT_ID = import.meta.env.VITE_TENANT_ID;
 
 interface UsePedidosReturn {
   pedidos: Pedido[];
@@ -24,13 +24,16 @@ export function usePedidos(): UsePedidosReturn {
       setLoading(true);
       setError(null);
       
-      const response = await axios.get<Pedido[]>(
-        `${API_BASE_URL}/orders/${TENANT_ID}`
+      const response = await axios.get(
+        `${ORDERS_API_URL}${TENANT_ID}`
       );
       
+      // El backend devuelve { "active_orders": [...] }
+      const pedidosData = response.data.active_orders || [];
+      
       // Filtrar solo pedidos activos (no ENTREGADO ni CANCELADO)
-      const activePedidos = response.data.filter(
-        (pedido) => pedido.status !== "ENTREGADO" && pedido.status !== "CANCELADO"
+      const activePedidos = pedidosData.filter(
+        (pedido: Pedido) => pedido.status !== "ENTREGADO" && pedido.status !== "CANCELADO"
       );
       
       setPedidos(activePedidos);
@@ -47,7 +50,7 @@ export function usePedidos(): UsePedidosReturn {
       setError(null);
       
       await axios.put(
-        `${API_BASE_URL}/orders/${TENANT_ID}/${orderId}/updateStatus`,
+        `${ORDERS_API_URL}${TENANT_ID}/${orderId}/updateStatus`,
         { status: newStatus }
       );
       
@@ -71,7 +74,7 @@ export function usePedidos(): UsePedidosReturn {
       setError(null);
       
       await axios.post(
-        `${API_BASE_URL}/orders/${TENANT_ID}/${orderId}/cancel`
+        `${ORDERS_API_URL}${TENANT_ID}/${orderId}/cancel`
       );
       
       // Remover el pedido de la lista (ya que está cancelado)

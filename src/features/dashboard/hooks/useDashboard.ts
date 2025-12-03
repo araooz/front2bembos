@@ -1,11 +1,9 @@
-// features/dashboard/hooks/useDashboard.ts
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import type { Pedido, OrderStatus } from "../../pedidos/types/pedido.types";
 import type { DashboardMetrics, EstadoCount, HourlyData } from "../types/dashboard.types";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const ORDERS_API_URL = import.meta.env.VITE_ORDERS_API_URL;
 const TENANT_ID = import.meta.env.VITE_TENANT_ID;
 
 interface UseDashboardReturn {
@@ -116,23 +114,17 @@ export function useDashboard(): UseDashboardReturn {
 
       // Obtener todos los pedidos
       const response = await axios.get(
-        `${API_BASE_URL}/orders/${TENANT_ID}`
+        `${ORDERS_API_URL}${TENANT_ID}`
       );
 
       let pedidos: Pedido[] = [];
 
-      // Manejar diferentes formatos de respuesta
-      if (Array.isArray(response.data)) {
+      // El backend devuelve { "active_orders": [...] }
+      if (response.data && response.data.active_orders && Array.isArray(response.data.active_orders)) {
+        pedidos = response.data.active_orders;
+      } else if (Array.isArray(response.data)) {
+        // Por si acaso devuelve array directo
         pedidos = response.data;
-      } else if (response.data && typeof response.data === "object") {
-        const data: any = response.data;
-        if (data.orders && Array.isArray(data.orders)) {
-          pedidos = data.orders;
-        } else if (data.data && Array.isArray(data.data)) {
-          pedidos = data.data;
-        } else {
-          pedidos = Object.values(data);
-        }
       }
 
       // Calcular métricas

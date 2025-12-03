@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import type { Empleado, EmpleadoFormData, FiltroEstado } from "../types/empleado.types";
 
-const API_BASE_URL = import.meta.env.VITE_STAFF_API_URL;
+const STAFF_API_URL = import.meta.env.VITE_STAFF_API_URL;
 const TENANT_ID = import.meta.env.VITE_TENANT_ID;
 
 interface UseEmpleadosReturn {
@@ -37,32 +37,22 @@ export function useEmpleados(): UseEmpleadosReturn {
       setLoading(true);
       setError(null);
 
-      console.log("Fetching from:", `${API_BASE_URL}/staff/${TENANT_ID}/all/members`);
+      console.log("Fetching from:", `${STAFF_API_URL}${TENANT_ID}/all/members`);
 
       const response = await axios.get(
-        `${API_BASE_URL}/staff/${TENANT_ID}/all/members`
+        `${STAFF_API_URL}${TENANT_ID}/all/members`
       );
 
       console.log("Response:", response.data);
 
-      // Manejar diferentes formatos de respuesta del backend
+      // El backend devuelve { "staff": [...] }
       let empleadosData: Empleado[] = [];
 
-      if (Array.isArray(response.data)) {
-        // Si la respuesta es un array directamente
+      if (response.data && response.data.staff && Array.isArray(response.data.staff)) {
+        empleadosData = response.data.staff;
+      } else if (Array.isArray(response.data)) {
+        // Por si acaso devuelve array directo
         empleadosData = response.data;
-      } else if (response.data && typeof response.data === 'object') {
-        // Si la respuesta es un objeto con una propiedad que contiene el array
-        if (response.data.members && Array.isArray(response.data.members)) {
-          empleadosData = response.data.members;
-        } else if (response.data.data && Array.isArray(response.data.data)) {
-          empleadosData = response.data.data;
-        } else if (response.data.items && Array.isArray(response.data.items)) {
-          empleadosData = response.data.items;
-        } else {
-          // Si es un objeto con empleados, convertirlo a array
-          empleadosData = Object.values(response.data);
-        }
       }
 
       console.log("Empleados procesados:", empleadosData);
@@ -81,7 +71,7 @@ export function useEmpleados(): UseEmpleadosReturn {
       setError(null);
 
       const response = await axios.post(
-        `${API_BASE_URL}/staff/${TENANT_ID}/new/members`,
+        `${STAFF_API_URL}${TENANT_ID}/new/members`,
         {
           email: data.email,
           name: data.name,
@@ -104,7 +94,7 @@ export function useEmpleados(): UseEmpleadosReturn {
       setError(null);
 
       const response = await axios.put(
-        `${API_BASE_URL}/staff/${TENANT_ID}/members/${staffId}`,
+        `${STAFF_API_URL}${TENANT_ID}/members/${staffId}`,
         {
           name: data.name,
           role: data.role,
@@ -134,7 +124,7 @@ export function useEmpleados(): UseEmpleadosReturn {
       setError(null);
 
       const response = await axios.post(
-        `${API_BASE_URL}/staff/${TENANT_ID}/members/${staffId}/delete`
+        `${STAFF_API_URL}${TENANT_ID}/members/${staffId}/delete`
       );
 
       console.log("Delete response:", response.data);
@@ -160,7 +150,7 @@ export function useEmpleados(): UseEmpleadosReturn {
       setError(null);
 
       const response = await axios.get(
-        `${API_BASE_URL}/staff/${TENANT_ID}/members/${staffId}`
+        `${STAFF_API_URL}${TENANT_ID}/members/${staffId}`
       );
 
       console.log("Get empleado response:", response.data);
