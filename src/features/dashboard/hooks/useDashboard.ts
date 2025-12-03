@@ -29,10 +29,8 @@ const getHourFromDate = (dateString: string): number => {
 };
 
 const calculateMetrics = (pedidos: Pedido[]): DashboardMetrics => {
-  // Filtrar solo pedidos de hoy
   const pedidosHoy = pedidos.filter((p) => isToday(p.createdAt));
 
-  // Totales
   const totalPedidos = pedidosHoy.length;
   const pedidosActivos = pedidosHoy.filter(
     (p) => p.status !== "ENTREGADO" && p.status !== "CANCELADO"
@@ -40,13 +38,11 @@ const calculateMetrics = (pedidos: Pedido[]): DashboardMetrics => {
   const pedidosCompletados = pedidosHoy.filter((p) => p.status === "ENTREGADO").length;
   const pedidosCancelados = pedidosHoy.filter((p) => p.status === "CANCELADO").length;
 
-  // Ingresos
   const ingresosTotal = pedidosHoy.reduce((sum, p) => sum + p.total, 0);
   const ingresosCompletados = pedidosHoy
     .filter((p) => p.status === "ENTREGADO")
     .reduce((sum, p) => sum + p.total, 0);
 
-  // Contar por estado
   const estadosCount: Record<OrderStatus, number> = {
     CREADO: 0,
     EN_PREPARACION: 0,
@@ -69,7 +65,6 @@ const calculateMetrics = (pedidos: Pedido[]): DashboardMetrics => {
       porcentaje: (cantidad / totalPedidos) * 100,
     }));
 
-  // Agrupar por hora
   const hoursData: Record<number, { cantidad: number; ingresos: number }> = {};
 
   for (let i = 0; i < 24; i++) {
@@ -83,7 +78,7 @@ const calculateMetrics = (pedidos: Pedido[]): DashboardMetrics => {
   });
 
   const pedidosPorHora: HourlyData[] = Object.entries(hoursData)
-    .filter(([_, data]) => data.cantidad > 0) // Solo mostrar horas con pedidos
+    .filter(([_, data]) => data.cantidad > 0)
     .map(([hour, data]) => ({
       hora: `${hour.padStart(2, "0")}:00`,
       cantidad: data.cantidad,

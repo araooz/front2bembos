@@ -1,7 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { api } from "../../../services/api";
 import type { Empleado, EmpleadoFormData, FiltroEstado } from "../types/empleado.types";
-import axios from "axios";
 
 const STAFF_API_URL = import.meta.env.VITE_STAFF_API_URL;
 const TENANT_ID = import.meta.env.VITE_TENANT_ID;
@@ -26,11 +26,10 @@ export function useEmpleados(): UseEmpleadosReturn {
   const [error, setError] = useState<string | null>(null);
   const [filtro, setFiltro] = useState<FiltroEstado>("activos");
 
-  // Filtrar empleados según el estado seleccionado
   const empleadosFiltrados = empleados.filter((empleado) => {
     if (filtro === "activos") return empleado.isActive;
     if (filtro === "inactivos") return !empleado.isActive;
-    return true; // "ambos"
+    return true;
   });
 
   const fetchEmpleados = async () => {
@@ -63,7 +62,7 @@ export function useEmpleados(): UseEmpleadosReturn {
     try {
       setError(null);
 
-      const response = await axios.post(
+      const response = await api.post(
         `${STAFF_API_URL}${TENANT_ID}/new/members`,
         {
           email: data.email,
@@ -76,7 +75,6 @@ export function useEmpleados(): UseEmpleadosReturn {
       await fetchEmpleados();
     } catch (err: any) {
       console.error("Error creating empleado:", err);
-      console.error("Error response:", err.response?.data);
       setError(err.response?.data?.message || "Error al crear el empleado");
       throw err;
     }
@@ -86,7 +84,7 @@ export function useEmpleados(): UseEmpleadosReturn {
     try {
       setError(null);
 
-      const response = await axios.put(
+      const response = await api.put(
         `${STAFF_API_URL}${TENANT_ID}/members/${staffId}`,
         {
           name: data.name,
@@ -96,7 +94,6 @@ export function useEmpleados(): UseEmpleadosReturn {
 
       console.log("Update response:", response.data);
 
-      // Actualizar el estado local
       setEmpleados((prev) =>
         prev.map((empleado) =>
           empleado.staff_id === staffId
@@ -106,7 +103,6 @@ export function useEmpleados(): UseEmpleadosReturn {
       );
     } catch (err: any) {
       console.error("Error updating empleado:", err);
-      console.error("Error response:", err.response?.data);
       setError(err.response?.data?.message || "Error al actualizar el empleado");
       throw err;
     }
@@ -116,13 +112,12 @@ export function useEmpleados(): UseEmpleadosReturn {
     try {
       setError(null);
 
-      const response = await axios.post(
+      const response = await api.post(
         `${STAFF_API_URL}${TENANT_ID}/members/${staffId}/delete`
       );
 
       console.log("Delete response:", response.data);
 
-      // Actualizar el estado local (soft delete)
       setEmpleados((prev) =>
         prev.map((empleado) =>
           empleado.staff_id === staffId
@@ -132,7 +127,6 @@ export function useEmpleados(): UseEmpleadosReturn {
       );
     } catch (err: any) {
       console.error("Error deleting empleado:", err);
-      console.error("Error response:", err.response?.data);
       setError(err.response?.data?.message || "Error al desactivar el empleado");
       throw err;
     }
@@ -142,7 +136,7 @@ export function useEmpleados(): UseEmpleadosReturn {
     try {
       setError(null);
 
-      const response = await axios.get(
+      const response = await api.get(
         `${STAFF_API_URL}${TENANT_ID}/members/${staffId}`
       );
 
@@ -150,7 +144,6 @@ export function useEmpleados(): UseEmpleadosReturn {
       return response.data;
     } catch (err: any) {
       console.error("Error fetching empleado:", err);
-      console.error("Error response:", err.response?.data);
       setError(err.response?.data?.message || "Error al obtener el empleado");
       return null;
     }
