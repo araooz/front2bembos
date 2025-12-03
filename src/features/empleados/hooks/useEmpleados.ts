@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { api } from "../../../services/api";
 import type { Empleado, EmpleadoFormData, FiltroEstado } from "../types/empleado.types";
+import axios from "axios";
 
 const STAFF_API_URL = import.meta.env.VITE_STAFF_API_URL;
 const TENANT_ID = import.meta.env.VITE_TENANT_ID;
@@ -37,29 +38,21 @@ export function useEmpleados(): UseEmpleadosReturn {
       setLoading(true);
       setError(null);
 
-      console.log("Fetching from:", `${STAFF_API_URL}${TENANT_ID}/all/members`);
-
-      const response = await axios.get(
+      const response = await api.get(
         `${STAFF_API_URL}${TENANT_ID}/all/members`
       );
 
-      console.log("Response:", response.data);
-
-      // El backend devuelve { "staff": [...] }
       let empleadosData: Empleado[] = [];
 
       if (response.data && response.data.staff && Array.isArray(response.data.staff)) {
         empleadosData = response.data.staff;
       } else if (Array.isArray(response.data)) {
-        // Por si acaso devuelve array directo
         empleadosData = response.data;
       }
 
-      console.log("Empleados procesados:", empleadosData);
       setEmpleados(empleadosData);
     } catch (err: any) {
       console.error("Error fetching empleados:", err);
-      console.error("Error response:", err.response?.data);
       setError(err.response?.data?.message || "Error al cargar los empleados");
     } finally {
       setLoading(false);

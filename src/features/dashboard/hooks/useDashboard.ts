@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { api } from "../../../services/api";
 import type { Pedido, OrderStatus } from "../../pedidos/types/pedido.types";
 import type { DashboardMetrics, EstadoCount, HourlyData } from "../types/dashboard.types";
 
@@ -112,22 +112,18 @@ export function useDashboard(): UseDashboardReturn {
       setLoading(true);
       setError(null);
 
-      // Obtener todos los pedidos
-      const response = await axios.get(
+      const response = await api.get(
         `${ORDERS_API_URL}${TENANT_ID}`
       );
 
       let pedidos: Pedido[] = [];
 
-      // El backend devuelve { "active_orders": [...] }
       if (response.data && response.data.active_orders && Array.isArray(response.data.active_orders)) {
         pedidos = response.data.active_orders;
       } else if (Array.isArray(response.data)) {
-        // Por si acaso devuelve array directo
         pedidos = response.data;
       }
 
-      // Calcular métricas
       const calculatedMetrics = calculateMetrics(pedidos);
       setMetrics(calculatedMetrics);
     } catch (err: any) {

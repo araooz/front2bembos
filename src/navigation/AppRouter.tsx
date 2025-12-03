@@ -1,24 +1,56 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "../features/login/page/LoginPage.tsx";
-import Navbar from "./NavBar.tsx";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { ProtectedRoute } from "../features/auth/components/ProtectedRoute";
+import LoginPage from "../features/login/page/LoginPage";
+import DashboardPage from "../features/dashboard/pages/DashboardPage";
 import PedidosPage from "../features/pedidos/page/PedidosPage";
-import EmpleadosPage from "../features/empleados/page/EmpleadosPage.tsx";
-import DashboardPage from "../features/dashboard/pages/DashboardPage.tsx";
+import EmpleadosPage from "../features/empleados/page/EmpleadosPage";
+import Navbar from "./NavBar";
+import { useAuth } from "../features/auth/hooks/useAuth";
 
-export default function AppRouter() {
+function AppRouter() {
+    const { isAuthenticated } = useAuth();
+
     return (
-        <Router>
-            <div className="w-full min-h-screen flex flex-col">
-                <Navbar />
-                <div className="flex-1 w-full">
-                    <Routes>
-                        <Route path="/*" element={<LoginPage/>} />
-                        <Route path="/dashboard" element={<DashboardPage />} />
-                        <Route path="/pedidos" element={<PedidosPage />} />
-                        <Route path="/empleados" element={<EmpleadosPage />} />
-                    </Routes>
-                </div>
-            </div>
-        </Router>
+        <>
+            {/* Navbar solo se muestra si está autenticado */}
+            {isAuthenticated && <Navbar />}
+
+            <Routes>
+                {/* Ruta pública */}
+                <Route path="/login" element={<LoginPage />} />
+
+                {/* Rutas protegidas */}
+                <Route
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <DashboardPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/pedidos"
+                    element={
+                        <ProtectedRoute>
+                            <PedidosPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/empleados"
+                    element={
+                        <ProtectedRoute>
+                            <EmpleadosPage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                {/* Redirección por defecto */}
+                <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Routes>
+        </>
     );
 }
+
+export default AppRouter;
