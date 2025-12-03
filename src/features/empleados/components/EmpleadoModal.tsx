@@ -75,6 +75,14 @@ export default function EmpleadoModal({
       return;
     }
 
+    // Validar contraseña solo al crear
+    if (!isEditing) {
+      if (!formData.password || formData.password.length < 6) {
+        // Aunque el input tiene minLength, validamos aquí también por seguridad
+        return;
+      }
+    }
+
     try {
       await onSave(formData);
     } catch (err) {
@@ -148,8 +156,8 @@ export default function EmpleadoModal({
           {/* Status Banner (Editing Mode) */}
           {isEditing && empleado && (
             <div className={`rounded-xl p-4 border ${empleado.isActive
-                ? "bg-green-50 border-green-100"
-                : "bg-red-50 border-red-100"
+              ? "bg-green-50 border-green-100"
+              : "bg-red-50 border-red-100"
               }`}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -214,8 +222,8 @@ export default function EmpleadoModal({
                   disabled={isEditing}
                   required
                   className={`block w-full pl-10 pr-3 py-2.5 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all ${emailError
-                      ? "border-red-300 focus:border-red-500 focus:ring-red-500/20"
-                      : "border-gray-300"
+                    ? "border-red-300 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-gray-300"
                     } ${isEditing ? "bg-gray-50 text-gray-500 cursor-not-allowed" : "text-gray-900"}`}
                   placeholder="ejemplo@bembos.com"
                 />
@@ -264,6 +272,35 @@ export default function EmpleadoModal({
                 </div>
               </div>
             </div>
+
+            {/* Password (Solo crear) */}
+            {!isEditing && (
+              <div className="group">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
+                  Contraseña
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="password"
+                    id="password"
+                    value={formData.password || ""}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
+                    required={!isEditing}
+                    className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                    placeholder="••••••••"
+                    minLength={6}
+                  />
+                </div>
+                <p className="mt-1.5 text-xs text-gray-500 ml-1">
+                  Mínimo 6 caracteres.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Warning Inactivo */}

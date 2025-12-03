@@ -21,7 +21,7 @@ export default function PedidoCard({ pedido, onClick }: PedidoCardProps) {
 
   const formatAddress = (): string => {
     if (!pedido.delivery_address) return "Sin dirección";
-    
+
     const { street, district, city } = pedido.delivery_address;
     const parts = [street, district, city].filter(Boolean);
     return parts.length > 0 ? parts.join(", ") : "Sin dirección";
@@ -52,7 +52,7 @@ export default function PedidoCard({ pedido, onClick }: PedidoCardProps) {
         <div className="ml-6 space-y-1">
           {pedido.items.map((item, index) => (
             <p key={index} className="text-sm text-gray-600">
-              {item.quantity}x Producto #{item.product_id.slice(0, 6)}
+              {item.quantity}x Producto #{item.product_id?.slice(0, 6) || 'N/A'}
             </p>
           ))}
         </div>

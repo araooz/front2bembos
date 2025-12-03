@@ -16,6 +16,7 @@ export interface EmpleadoFormData {
   email: string; // Se convertirá en staff_id
   name: string;
   role: EmpleadoRole;
+  password?: string;
 }
 
 export const ROLES: EmpleadoRole[] = ["manager", "repartidor", "cocinero", "despachador"];

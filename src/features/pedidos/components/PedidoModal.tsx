@@ -1,6 +1,6 @@
 import { X, AlertCircle, ArrowRight, Ban } from "lucide-react";
-import type { Pedido, OrderStatus} from "../types/pedido.types";
-import {ORDER_STATUS_FLOW } from "../types/pedido.types";
+import type { Pedido, OrderStatus } from "../types/pedido.types";
+import { ORDER_STATUS_FLOW } from "../types/pedido.types";
 import StatusBadge from "./StatusBadge";
 
 interface PedidoModalProps {
@@ -42,11 +42,11 @@ export default function PedidoModal({
 
   const formatAddress = (): string => {
     if (!pedido.delivery_address) return "Sin dirección especificada";
-    
+
     const { street, district, city, reference } = pedido.delivery_address;
     const parts = [street, district, city].filter(Boolean);
     const address = parts.length > 0 ? parts.join(", ") : "Sin dirección";
-    
+
     return reference ? `${address} (Ref: ${reference})` : address;
   };
 
@@ -109,7 +109,7 @@ export default function PedidoModal({
                 >
                   <div>
                     <p className="font-medium text-gray-900">
-                      Producto #{item.product_id.slice(0, 8)}
+                      Producto #{item.product_id?.slice(0, 8) || 'N/A'}
                     </p>
                     <p className="text-sm text-gray-600">Cantidad: {item.quantity}</p>
                   </div>
@@ -172,11 +172,10 @@ export default function PedidoModal({
               <button
                 onClick={() => onUpdateStatus(nextStatus)}
                 disabled={isUpdating}
-                className={`w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-colors ${
-                  isUpdating
+                className={`w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-colors ${isUpdating
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-blue-800 hover:bg-blue-900 text-white"
-                }`}
+                  }`}
               >
                 {isUpdating ? (
                   <span>Actualizando...</span>
@@ -193,11 +192,10 @@ export default function PedidoModal({
               <button
                 onClick={onCancel}
                 disabled={isUpdating}
-                className={`w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-colors ${
-                  isUpdating
+                className={`w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-colors ${isUpdating
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-red-600 hover:bg-red-700 text-white"
-                }`}
+                  }`}
               >
                 {isUpdating ? (
                   <span>Cancelando...</span>
